@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="5">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %5p (%t) [%c-%M %L] %m%n" />
+        </Console>
+ 		
+        <RollingFile name="file" fileName="${sys:user.home}/logs/ojt.log" filePattern="${sys:user.home}/logs/daily/ojt.%d{yyyy-MM-dd-HH-mm-ss}">
+			<PatternLayout pattern="%d %5p (%t) [%c-%M %L] %m%n" />
+			<Policies>
+		  		<!-- size 단위: Byte(default), KB, MB, or GB -->
+   				<SizeBasedTriggeringPolicy size="100MB" />
+			</Policies>
+        </RollingFile> 		
+    </Appenders>
+    
+    
+    <Loggers>
+		<Logger name="com.barunsw" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Root level="ERROR">        
+            <AppenderRef ref="console" />
+        </Root>
+    </Loggers>
+    
+</Configuration>
