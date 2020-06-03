@@ -1,8 +1,11 @@
 package com.barunsw.day03;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
+import java.io.Reader;
 import java.nio.file.Files;
 
 import org.apache.logging.log4j.LogManager;
@@ -73,7 +76,36 @@ public class FileTest {
 		}
 		
 		// reader/writer(char단위)를 이용한  일고, 쓰기
+		char[] cbuf = new char[4];
+		try (Reader reader = new FileReader("data/day03/korean.dat")) {
+			while (true) {
+				int readNum = reader.read(cbuf);
+				if (readNum < 0) {
+					break;
+				}
+				
+				LOGGER.debug("readNum:" + readNum);
+				LOGGER.debug("cbuf:" + new String(cbuf));
+			}
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
 		
+		try (BufferedReader reader = new BufferedReader(new FileReader("data/day03/korean.dat"))) {
+			String readLine = null;
+			while ((readLine = reader.readLine()) != null) {
+				LOGGER.debug("readLine:" + readLine);
+				String[] words = readLine.split("\\s+");
+				//String[] words = readLine.split(" ");
+				for (String oneWord : words) {
+					LOGGER.debug("oneWord:" + oneWord);
+				}
+			}
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
 		
 //		try (BufferedReader reader = new BufferedReader(new FileReader(file));) {
 //			
