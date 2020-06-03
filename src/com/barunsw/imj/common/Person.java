@@ -1,8 +1,10 @@
 package com.barunsw.imj.common;
 
+import java.io.Serializable;
+
 import com.barunsw.imj.common.Person;
 
-public class Person extends Object {
+public class Person implements Serializable {
 	private String id;
 	private int age;
 	private String name;
