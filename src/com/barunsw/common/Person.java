@@ -1,6 +1,8 @@
 package com.barunsw.common;
 
-public class Person extends Object {
+import java.io.Serializable;
+
+public class Person implements Serializable {
 	private String id;
 	private int age;
 	private String name;

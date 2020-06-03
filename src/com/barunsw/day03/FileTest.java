@@ -1,10 +1,14 @@
 package com.barunsw.day03;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 
@@ -107,12 +111,25 @@ public class FileTest {
 			LOGGER.error(ex.getMessage(), ex);
 		}
 		
-//		try (BufferedReader reader = new BufferedReader(new FileReader(file));) {
-//			
-//			LOGGER.debug("line:" + reader.readLine());
-//		}
-//		catch (Exception ex) {
-//			LOGGER.error(ex.getMessage(), ex);
-//		}
+
+		try (OutputStream outputStream = new FileOutputStream("data/day03/test02.dat", true)) {
+			//String aaa = "abcdefg";
+			String aaa = "동해물과 백두산이";
+			
+			outputStream.write(aaa.getBytes());
+			//outputStream.write(aaa.getBytes(), 0, 10);
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/day03/test03.dat"))) {
+			String aaa = "동해물과 백두산이";
+			writer.write(aaa);
+			writer.newLine();
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
 	}
 }
