@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.barunsw.day05.PersonDao">
+	<select id="selectList"
+		parameterType="com.barunsw.common.Person"
+		resultType="com.barunsw.common.Person">
+		SELECT
+			ID
+			, AGE
+			, NAME
+		FROM
+			TB_PERSON
+	</select>
+ 
+	<insert id="insert" parameterType="com.barunsw.common.Person">
+		INSERT INTO TB_PERSON (
+			ID
+			, AGE
+			, NAME
+		)
+		VALUES (
+			#{id}
+			, #{age}
+			, #{name} 
+		)	
+	</insert>
+</mapper>

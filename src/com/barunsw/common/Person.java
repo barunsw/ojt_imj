@@ -7,6 +7,10 @@ public class Person implements Serializable {
 	private int age;
 	private String name;
 	
+	public Person() {
+		
+	}
+	
 	public Person(String id, int age, String name) {
 		this.id = id;
 		this.age = age;
