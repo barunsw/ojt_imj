@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.barunsw.imj.day05.PersonDao">
+	<select id				="selectList" 
+			parameterType	="com.barunsw.imj.common.Person" 
+			resultType		="com.barunsw.imj.common.Person">
+		SELECT
+			ID
+			, AGE
+			, NAME
+		FROM
+			TB_PERSON
+	</select>
+	
+	<select id				="selectIdList" 
+			parameterType	="com.barunsw.imj.common.Person" 
+			resultType		="com.barunsw.imj.common.Person">
+		SELECT
+			ID
+			, AGE
+			, NAME
+		FROM
+			TB_PERSON
+		WHERE
+			ID = #{id}
+	</select>
+	
+	
+	<insert id				= "insert" 
+			parameterType	= "com.barunsw.imj.common.Person">
+		INSERT INTO TB_PERSON (
+			ID
+			, AGE
+			, NAME
+		)
+		VALUES (
+			#{id}
+			, #{age}
+			, #{name}
+		)
+	</insert>
+	
+	<update id				= "update"
+			parameterType	= "com.barunsw.imj.common.Person">
+		UPDATE TB_PERSON
+		SET 
+			AGE = #{age}
+			, NAME = #{name}
+		WHERE
+			ID = #{id}			
+	</update>
+
+	<delete id				= "delete"
+			parameterType	= "com.barunsw.imj.common.Person">
+		DELETE 
+		FROM
+			TB_PERSON
+		WHERE
+			ID = #{id}			
+	</delete>
+	
+</mapper>

@@ -9,6 +9,14 @@ public class Person implements Serializable {
 	private int age;
 	private String name;
 	
+	public Person() {
+		
+	}
+	
+	public Person(String id) {
+		this.id = id;
+	}
+	
 	public Person(String id, int age, String name) {
 		this.id = id;
 		this.age = age;
@@ -65,7 +73,7 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return String.format("[%d]%s", age, name);
+		return String.format("id: %s, age: [%d], name: %s", id, age, name);
 	}
 	
 	
