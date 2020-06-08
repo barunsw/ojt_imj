@@ -25,17 +25,19 @@ public class PersonDao extends Exception {
 	}
 	
 	// person id검색 반환
-	public List<Person> getIdList(String id) throws Exception {
+	public List<Person> getIdList(Person person) throws Exception {
 			
 		List<Person> personIdList = null;
 		
 		try (SqlSession sqlSession = SqlSessionManager.getSqlSessionFactory().openSession()) {
-			personIdList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectIdList", id);
+			personIdList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person.getId());
 			
-			// id 유효성 검사
-			if( personIdList.isEmpty() ) {
-				throw new Exception(String.format("존재하지 않는 ID(%s). 0줄이 검색됨", id));
-			} 
+			// 동일한 ID 존재하는지 체크
+			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person);
+			if ( personList.isEmpty() ) {
+				throw new Exception("Person 정보 존재하지않음");
+			}
+ 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -49,7 +51,7 @@ public class PersonDao extends Exception {
 		try (SqlSession sqlSession = SqlSessionManager.getSqlSessionFactory().openSession()) {
 			// 동일한 ID 존재하는지 체크
 			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person);
-			if (personList != null && !personList.isEmpty()) {
+			if ( personList != null && !personList.isEmpty() ) {
 				throw new Exception("중복된 Person 정보 존재");
 			}
 			
@@ -68,15 +70,16 @@ public class PersonDao extends Exception {
 		int row = 0;
 		
 		try (SqlSession sqlSession = SqlSessionManager.getSqlSessionFactory().openSession()) {
-			row = sqlSession.delete("com.barunsw.imj.day05.PersonDao.update", person);
+			row = sqlSession.update("com.barunsw.imj.day05.PersonDao.update", person);
 			
-			// id 유효성 검사
-			if( row == 0 ) {
-				throw new Exception(String.format("존재하지 않는 ID(%s). 0줄이 변경됨", person.getId()));
-			} else {
-				LOGGER.debug("id가 {}인 사람이 변경되었습니다.", person.getId());
-				sqlSession.commit();
+			// 동일한 ID 존재하는지 체크
+			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person);
+			if ( personList.isEmpty() ) {
+				throw new Exception("Person 정보 존재하지 않음");
 			}
+			LOGGER.debug("id가 {}인 사람이 변경되었습니다.", person.getId());
+			sqlSession.commit();
+			
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -84,21 +87,24 @@ public class PersonDao extends Exception {
 		return row;
 	}
 	
-	public int delete(String id) throws Exception {
+	public int delete(Person person) throws Exception {
 		int row = 0;
 		
 		try (SqlSession sqlSession = SqlSessionManager.getSqlSessionFactory().openSession()) {
-			row = sqlSession.delete("com.barunsw.imj.day05.PersonDao.delete", id);
+			row = sqlSession.delete("com.barunsw.imj.day05.PersonDao.delete", person.getId());
 			
-			LOGGER.debug("id가 {}인 사람이 삭제되었습니다.", id);
+			
+			// 동일한 ID 존재하는지 체크
+			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person);
+			if (personList == null) {
+				throw new Exception("Person 정보 존재하지 않음");
+			}
+			
+			LOGGER.debug("id가 {}인 사람이 삭제되었습니다.", person.getId());
 			sqlSession.commit();
 			
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			// id 유효성 검사
-			if( row == 0 ) {
-				throw new Exception(String.format("존재하지 않는 ID(%s). 0줄이 삭제됨", id));
-			}
 		}
 		
 		return row;

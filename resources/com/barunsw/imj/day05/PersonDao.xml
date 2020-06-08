@@ -21,20 +21,6 @@
 			</if>
 	</select>
 	
-	<select id				="selectIdList" 
-			parameterType	="com.barunsw.imj.common.Person" 
-			resultType		="com.barunsw.imj.common.Person">
-		SELECT
-			ID
-			, AGE
-			, NAME
-		FROM
-			TB_PERSON
-		WHERE
-			ID = #{id}
-	</select>
-	
-	
 	<insert id				= "insert" 
 			parameterType	= "com.barunsw.imj.common.Person">
 		INSERT INTO TB_PERSON (

@@ -33,7 +33,7 @@ public class MybatisTest {
 		// SELECT ID
 		String id = "12345";
 		
-		List<Person> personIdList = personDao.getIdList(id);
+		List<Person> personIdList = personDao.getList(new Person(id));
 		
 		for (Person onePerson : personIdList) {
 			LOGGER.debug(onePerson);
@@ -47,7 +47,7 @@ public class MybatisTest {
 		// DELETE
 		id = "111112";
 		
-		personDao.delete(id);
+		personDao.delete(new Person(id));
 
 	}
 }
