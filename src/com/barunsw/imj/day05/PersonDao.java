@@ -47,15 +47,18 @@ public class PersonDao extends Exception {
 		int result = 0;
 		
 		try (SqlSession sqlSession = SqlSessionManager.getSqlSessionFactory().openSession()) {
+			// 동일한 ID 존재하는지 체크
+			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day05.PersonDao.selectList", person);
+			if (personList != null && !personList.isEmpty()) {
+				throw new Exception("중복된 Person 정보 존재");
+			}
+			
 			result = sqlSession.insert("com.barunsw.imj.day05.PersonDao.insert", person);
 			sqlSession.commit();
 			 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			
-			if( result == 0 ) {
-				throw new Exception("동일한 id 존재");
-			}
 		}
 		
 		return result;
