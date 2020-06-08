@@ -105,6 +105,8 @@ public class TestPanel extends JPanel {
 	}
 }
 
+
+// Listener를 불러올 클래스 생성. 같은 패키지에서 사용 가능하도록 default class 생성
 class TestPanel_jCombobox_Type_ItemListener implements ItemListener {
 	private TestPanel adaptee;
 	
