@@ -1,4 +1,4 @@
-package com.barunsw.imj.day06;
+package com.barunsw.imj.day07;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 public class TestFrame extends JFrame {
 	private static Logger LOGGER = LogManager.getLogger(TestFrame.class);
 	
-	private static final int FRAME_WIDTH = 640;
-	private static final int FRAME_HEIGHT = 640;
+	private static final int FRAME_WIDTH 	= 640;
+	private static final int FRAME_HEIGHT 	= 640;
 	
 	private TestPanel jPanel_Test = new TestPanel();
 	
@@ -32,11 +32,8 @@ public class TestFrame extends JFrame {
 		this.setContentPane(jPanel_Test);
 		
 		// 제목 설정
-		this.setTitle("테스트 프레임");
-		
-		// 아이콘 설정
-//		this.setIconImage(image);
-		
+		this.setTitle("AddressBook");
+
 		// 화면 해상도 설정
 		Dimension scrDim = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -44,7 +41,7 @@ public class TestFrame extends JFrame {
 		LOGGER.debug("scrDim.height: " + scrDim.height);
 		
 		// 프레임 위치 가운데 정렬
-		int frameX = (scrDim.width - FRAME_WIDTH) / 2;
+		int frameX = (scrDim.width - FRAME_WIDTH) 	/ 2;
 		int frameY = (scrDim.height - FRAME_HEIGHT) / 2;
 		
 		// 프레임 위치, 크기 설정

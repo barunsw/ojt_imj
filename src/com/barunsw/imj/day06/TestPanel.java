@@ -69,7 +69,7 @@ public class TestPanel extends JPanel {
 		this.add(jRadioButton_Man);
 		this.add(jRadioButton_Woman);
 		
-		// getViewpoint 필수!!
+		// getViewport 필수!!
 		jScrollPane_Chat.getViewport().add(jTextArea_Chat);
 //		jScrollPane_Chat.add(jTextArea_Chat);
 		
