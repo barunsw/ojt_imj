@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -28,14 +30,34 @@ import com.barunsw.imj.day05.PersonDao;
 public class TestPanel extends JPanel {
 	private static Logger LOGGER = LogManager.getLogger(TestPanel.class);
 	
+	// Table 셀 인덱스 정의
+	private int idx = 0;
+	private final int TABLE_CELL_INDEX_ID = idx++;
+	private final int TABLE_CELL_INDEX_NAME = idx++;
+	private final int TABLE_CELL_INDEX_AGE = idx++;
+	private final int TABLE_CELL_INDEX_GENDER = idx++;
+	private final int TABLE_CELL_INDEX_PHONE = idx++;
+	private final int TABLE_CELL_INDEX_ADDRESS = idx++;
+	
 	private JLabel jLabel_Id 			= new JLabel("Id");
 	private JTextField jTextField_Id 	= new JTextField();
-
+	
 	private JLabel jLabel_Name 			= new JLabel("이름");
 	private JTextField jTextField_Name 	= new JTextField();
 	
 	private JLabel jLabel_Age 		= new JLabel("나이");
 	private JSpinner jSpinner_Age	= new JSpinner();
+	
+	private JLabel jLabel_Gender 			= new JLabel("성별");
+	private ButtonGroup buttonGroup_Gender 	= new ButtonGroup();
+	private JRadioButton jRadioButton_Man 	= new JRadioButton("남자");
+	private JRadioButton jRadioButton_Woman = new JRadioButton("여자");
+	
+	private JLabel jLabel_Phone 			= new JLabel("전화번호");
+	private JTextField jTextField_Phone 	= new JTextField();
+	
+	private JLabel jLabel_Address 			= new JLabel("주소");
+	private JTextField jTextField_Address 	= new JTextField();
 	
 	public JButton jButton_Add 		= new JButton("추가");
 	private JButton jButton_Change 	= new JButton("변경");
@@ -80,49 +102,94 @@ public class TestPanel extends JPanel {
 				new Insets(5, 5, 5, 5),
 				0, 0));
 		
-		this.add(jTextField_Id, new GridBagConstraints(1, 0, 1, 1,
-				1.0, 0.0,
-				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-				new Insets(5, 0, 5, 5),
-				0, 0));
-		
 		this.add(jLabel_Name, new GridBagConstraints(0, 1, 1, 1,
 				0.0, 0.0,
 				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(0, 5, 5, 5),
+				new Insets(5, 5, 5, 5),
 				0, 0));
 		
 		this.add(jTextField_Name, new GridBagConstraints(1, 1, 1, 1,
 				1.0, 0.0,
 				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-				new Insets(0, 0, 5, 5),
+				new Insets(5, 0, 5, 5),
 				0, 0));
-		
+		String name = jTextField_Name.toString();
+		System.out.println(name);
+
 		this.add(jLabel_Age, new GridBagConstraints(2, 1, 1, 1,
 				0.0, 0.0,
 				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(0, 0, 5, 5),
+				new Insets(5, 5, 5, 5),
 				0, 0));
 
 		this.add(jSpinner_Age, new GridBagConstraints(3, 1, 1, 1,
 				1.0, 0.0,
 				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+				new Insets(5, 0, 5, 5),
+				0, 0));
+		
+		this.add(jLabel_Gender, new GridBagConstraints(4, 1, 1, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+				new Insets(5, 0, 5, 5),
+				0, 0));
+		
+		jRadioButton_Woman.setSelected(true);
+		
+		// 라디오버튼 그룹화
+		buttonGroup_Gender.add(jRadioButton_Man);
+		buttonGroup_Gender.add(jRadioButton_Woman);
+		
+		this.add(jRadioButton_Man, new GridBagConstraints(5, 1, 1, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+				new Insets(5, 0, 5, 5),
+				0, 0));
+		
+		this.add(jRadioButton_Woman, new GridBagConstraints(6, 1, 1, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+				new Insets(5, 0, 5, 5),
+				0, 0));
+		
+		this.add(jLabel_Phone, new GridBagConstraints(0, 2, 1, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(0, 5, 5, 5),
+				0, 0));
+		
+		this.add(jTextField_Phone, new GridBagConstraints(1, 2, 6, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 				new Insets(0, 0, 5, 5),
 				0, 0));
 		
-		// Button
-		this.add(jPanel_Command, new GridBagConstraints(0, 2, 4, 1, 
-				1.0, 0.0, 
-				GridBagConstraints.EAST, GridBagConstraints.NONE, 
-				new Insets(0, 5, 5, 5), 
+		this.add(jLabel_Address, new GridBagConstraints(0, 3, 1, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(0, 5, 5, 5),
 				0, 0));
 		
-		// Table
+		this.add(jTextField_Address, new GridBagConstraints(1, 3, 6, 1,
+				1.0, 0.0,
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+				new Insets(0, 0, 5, 5),
+				0, 0));
+		
+		
+		// button
+		this.add(jPanel_Command, new GridBagConstraints(0, 4, 7, 1, 
+				1.0, 0.0, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(0, 0, 0, 0), 
+				0, 0));
+		
+		// table
 		jScrollPane_List.getViewport().add(jTable_List);
 		
-		this.add(jScrollPane_List, new GridBagConstraints(0, 3, 4, 1,
-				1.0, 1.0,
-				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+		this.add(jScrollPane_List, new GridBagConstraints(0, 5, 7, 1, 
+				1.0, 1.0, 
+				GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
 				new Insets(0, 5, 5, 5),
 				0, 0));
 		
@@ -249,19 +316,20 @@ public class TestPanel extends JPanel {
 	
 	void jButton_Add_actionPerformed(ActionEvent e) {
 		
-		String id	= parentPanel.getjTextField_Id().getText();
-		int age		= (Integer) parentPanel.getjSpinner_Age().getValue();
-		String name = parentPanel.getjTextField_Name().getText();
+		String id	= jTextField_Id.getText();
+		int age		= (Integer) jSpinner_Age.getValue();
+		String name = jTextField_Name.getText();
 		
-		Person p 	= new Person(id, age, name);
-		
-		try {
-			personDao.add(p);
-			jButton_Reload_actionPerformed(e);
-		} catch (Exception e1) {
-			LOGGER.error(e1.getMessage(), e1);
-		}
-		
+//		Person p 	= new Person(id, age, name);
+//		
+//		try {
+//			personDao.add(p);
+//			
+//			initData();
+//		} catch (Exception e1) {
+//			LOGGER.error(e1.getMessage(), e1);
+//		}
+//		
 	}
 	
 	void jButton_Change_actionPerformed(ActionEvent e) {
@@ -269,16 +337,16 @@ public class TestPanel extends JPanel {
 		int age 	= (Integer)jSpinner_Age.getValue();
 		String name = jTextField_Name.getText();
 		
-		Person p = new Person(id, age, name);
-		
-		try {
-			personDao.change(p);
-			
-			initData();
-		} 
-		catch (Exception e1) {
-			LOGGER.error(e1.getMessage(), e1);
-		}
+//		Person p = new Person(id, age, name);
+//		
+//		try {
+//			personDao.change(p);
+//			
+//			initData();
+//		} 
+//		catch (Exception e1) {
+//			LOGGER.error(e1.getMessage(), e1);
+//		}
 	}
 	
 	void jButton_Reload_actionPerformed(ActionEvent e) {

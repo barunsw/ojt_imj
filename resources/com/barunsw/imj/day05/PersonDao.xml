@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-<mapper namespace="com.barunsw.imj.day05.PersonDao">
-	<select id				="selectList" 
-			parameterType	="com.barunsw.imj.common.Person" 
-			resultType		="com.barunsw.imj.common.Person">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.barunsw.imj.day09.controller.AddressBookInterface">
+	<select id="selectList" parameterType="com.barunsw.imj.common.Person" resultType="com.barunsw.imj.common.Person">
 		SELECT
 			ID
-			, AGE
 			, NAME
+			, AGE
+			, GENDER
+			, PHONE
+			, ADDRESS
 		FROM
 			TB_PERSON
 		WHERE
@@ -21,32 +18,38 @@
 			</if>
 	</select>
 	
-	<insert id				= "insert" 
-			parameterType	= "com.barunsw.imj.common.Person">
+	<insert id="insert" parameterType="com.barunsw.imj.common.Person">
 		INSERT INTO TB_PERSON (
 			ID
-			, AGE
 			, NAME
+			, AGE
+			, GENDER
+			, PHONE
+			, ADDRESS
 		)
 		VALUES (
 			#{id}
-			, #{age}
 			, #{name}
+			, #{age}
+			, #{gender}
+			, #{phone}
+			, #{address}
 		)
 	</insert>
 	
-	<update id				= "update"
-			parameterType	= "com.barunsw.imj.common.Person">
+	<update id="update" parameterType="com.barunsw.imj.common.Person">
 		UPDATE TB_PERSON
 		SET 
-			AGE = #{age}
-			, NAME = #{name}
+			NAME 		= #{name}
+			, AGE 		= #{age}
+			, GENDER 	= #{gender}
+			, PHONE 	= #{phone}
+			, ADDRESS 	= #{address}
 		WHERE
 			ID = #{id}			
 	</update>
 
-	<delete id				= "delete"
-			parameterType	= "com.barunsw.imj.common.Person">
+	<delete id="delete" parameterType="com.barunsw.imj.common.Person">
 		DELETE 
 		FROM
 			TB_PERSON

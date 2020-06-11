@@ -2,12 +2,16 @@ package com.barunsw.imj.common;
 
 import java.io.Serializable;
 
-import com.barunsw.imj.common.Person;
+import com.barunsw.imj.common.constants.Gender;
 
 public class Person implements Serializable {
 	private String id;
-	private int age;
 	private String name;
+	private int age;
+	private Gender gender;
+	private String phone;
+	private String address;
+	
 	
 	public Person() {
 		
@@ -17,10 +21,13 @@ public class Person implements Serializable {
 		this.id = id;
 	}
 	
-	public Person(String id, int age, String name) {
-		this.id = id;
-		this.age = age;
-		this.name = name;
+	public Person(String id, String name, int age, Gender gender, String phone, String address) {
+		this.id			= id;
+		this.name 		= name;
+		this.age		= age;
+		this.gender 	= gender;
+		this.phone 		= phone;
+		this.address 	= address;
 	}
 	
 	// Getter Setter(Ctrl + Shift + s + r)
@@ -31,6 +38,13 @@ public class Person implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public int getAge() {
 		return age;
@@ -40,14 +54,30 @@ public class Person implements Serializable {
 		this.age = age;
 	}
 	
-	public String getName() {
-		return name;
+	public Gender getGender() {
+		return gender;
 	}
-	
-	public void setName(String name) {
-		this.name = name;
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
-	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Person) {
@@ -75,6 +105,7 @@ public class Person implements Serializable {
 		// TODO Auto-generated method stub
 		return String.format("id: %s, age: [%d], name: %s", id, age, name);
 	}
-	
+
+
 	
 }
