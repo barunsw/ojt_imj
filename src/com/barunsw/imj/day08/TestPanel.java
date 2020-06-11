@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,6 +21,7 @@ import javax.swing.table.TableColumn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.barunsw.common.constants.Gender;
 import com.barunsw.imj.common.Person;
 import com.barunsw.imj.day05.PersonDao;
 
@@ -33,15 +37,21 @@ public class TestPanel extends JPanel {
 	private JLabel jLabel_Age 		= new JLabel("나이");
 	private JSpinner jSpinner_Age	= new JSpinner();
 	
-	private TestButtonPanel Panal_Button 	= new TestButtonPanel(this);
+	public JButton jButton_Add 		= new JButton("추가");
+	private JButton jButton_Change 	= new JButton("변경");
+	private JButton jButton_Reload 	= new JButton("재조회");
+	
+	//private TestButtonPanel Panal_Button 	= new TestButtonPanel(this);
+	private JPanel jPanel_Command	= new JPanel();
 
 	private JScrollPane jScrollPane_List = new JScrollPane();
 	private JTable jTable_List			 = new JTable();
 	
+	private GridBagLayout gridBagLayout = new GridBagLayout();
+	
 	private PersonDao personDao = new PersonDao();
 
 	private CommonTableModel tableModel;
-	
 	
 	public TestPanel() {
 		try {
@@ -56,7 +66,9 @@ public class TestPanel extends JPanel {
 	}
 	
 	private void initComponent() {		
-		this.setLayout(new GridBagLayout());
+		this.setLayout(gridBagLayout);
+		
+		jPanel_Command.setLayout(gridBagLayout);
 		
 		jLabel_Id.setPreferredSize(new Dimension(100, 22));
 		jLabel_Name.setPreferredSize(new Dimension(100, 22));
@@ -99,7 +111,7 @@ public class TestPanel extends JPanel {
 				0, 0));
 		
 		// Button
-		this.add(Panal_Button, new GridBagConstraints(0, 2, 4, 1, 
+		this.add(jPanel_Command, new GridBagConstraints(0, 2, 4, 1, 
 				1.0, 0.0, 
 				GridBagConstraints.EAST, GridBagConstraints.NONE, 
 				new Insets(0, 5, 5, 5), 
@@ -114,6 +126,26 @@ public class TestPanel extends JPanel {
 				new Insets(0, 5, 5, 5),
 				0, 0));
 		
+		jPanel_Command.add(jButton_Add, new GridBagConstraints(0, 0, 1, 1, 
+				0.0, 0.0, 
+				GridBagConstraints.EAST, GridBagConstraints.VERTICAL, 
+				new Insets(0, 5, 5, 5),
+				0, 0));
+		
+		jPanel_Command.add(jButton_Change, new GridBagConstraints(1, 0, 1, 1, 
+				0.0, 0.0, 
+				GridBagConstraints.EAST, GridBagConstraints.VERTICAL, 
+				new Insets(0, 0, 5, 5),
+				0, 0));
+		jPanel_Command.add(jButton_Reload, new GridBagConstraints(2, 0, 1, 1,
+				0.0, 0.0,
+				GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+				new Insets(0, 0, 5, 5),
+				0, 0));
+		
+		jButton_Add.addActionListener(new TestPanel_jButton_Add_ActionListener(this));
+		jButton_Change.addActionListener(new TestPanel_jButton_Change_ActionListener(this));
+		jButton_Reload.addActionListener(new TestPanel_jButton_Reload_ActionListener(this));
 	}
 	
 	private void initTable() {
@@ -215,4 +247,82 @@ public class TestPanel extends JPanel {
 		this.jSpinner_Age = jSpinner_Age;
 	}
 	
+	void jButton_Add_actionPerformed(ActionEvent e) {
+		
+		String id	= parentPanel.getjTextField_Id().getText();
+		int age		= (Integer) parentPanel.getjSpinner_Age().getValue();
+		String name = parentPanel.getjTextField_Name().getText();
+		
+		Person p 	= new Person(id, age, name);
+		
+		try {
+			personDao.add(p);
+			jButton_Reload_actionPerformed(e);
+		} catch (Exception e1) {
+			LOGGER.error(e1.getMessage(), e1);
+		}
+		
+	}
+	
+	void jButton_Change_actionPerformed(ActionEvent e) {
+		String id 	= jTextField_Id.getText();
+		int age 	= (Integer)jSpinner_Age.getValue();
+		String name = jTextField_Name.getText();
+		
+		Person p = new Person(id, age, name);
+		
+		try {
+			personDao.change(p);
+			
+			initData();
+		} 
+		catch (Exception e1) {
+			LOGGER.error(e1.getMessage(), e1);
+		}
+	}
+	
+	void jButton_Reload_actionPerformed(ActionEvent e) {
+		initData();	
+	}
+}
+
+class TestPanel_jButton_Add_ActionListener implements ActionListener {
+	private TestPanel adaptee;
+	
+	public TestPanel_jButton_Add_ActionListener(TestPanel adaptee) {
+		this.adaptee = adaptee;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		adaptee.jButton_Add_actionPerformed(e);
+		
+	}
+}
+
+class TestPanel_jButton_Change_ActionListener implements ActionListener {
+	private TestPanel adaptee;
+	
+	public TestPanel_jButton_Change_ActionListener(TestPanel adaptee) {
+		this.adaptee = adaptee;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		adaptee.jButton_Change_actionPerformed(e);
+		
+	}
+}
+
+class TestPanel_jButton_Reload_ActionListener implements ActionListener {
+	private TestPanel adaptee;
+	
+	public TestPanel_jButton_Reload_ActionListener(TestPanel adaptee) {
+		this.adaptee = adaptee;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		adaptee.jButton_Reload_actionPerformed(e);
+	}
 }

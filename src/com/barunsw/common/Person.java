@@ -2,10 +2,13 @@ package com.barunsw.common;
 
 import java.io.Serializable;
 
+import com.barunsw.common.constants.Gender;
+
 public class Person implements Serializable {
 	private String id;
 	private int age;
 	private String name;
+	private Gender gender;
 	
 	public Person() {
 		
@@ -41,6 +44,14 @@ public class Person implements Serializable {
 		this.name = name;
 	}
 	
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Person) {
