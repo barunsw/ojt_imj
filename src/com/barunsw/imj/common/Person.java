@@ -78,19 +78,19 @@ public class Person implements Serializable {
 		this.address = address;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Person) {
-			Person anotherPerson = (Person)o;
-			
-			if (this.age == anotherPerson.getAge() &&
-					this.name.equals(anotherPerson.getName())) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		if (o instanceof Person) {
+//			Person anotherPerson = (Person)o;
+//			
+//			if (this.age == anotherPerson.getAge() &&
+//					this.name.equals(anotherPerson.getName())) {
+//				return true;
+//			}
+//		}
+//		
+//		return false;
+//	}
 	
 	/*
 	@Override
@@ -103,7 +103,7 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return String.format("id: %s, age: [%d], name: %s", id, age, name);
+		return String.format("%s,%s,%d,%s,%s,%s", id, name, age, gender.toString(), phone, address);
 	}
 
 

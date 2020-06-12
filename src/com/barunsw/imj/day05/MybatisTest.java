@@ -14,11 +14,11 @@ public class MybatisTest {
 		PersonDao personDao = new PersonDao();
 		
 		// INSERT
-		Person p1 = new Person("11113", 11, "변경전");
+//		Person p1 = new Person("11113", 11, "변경전");
 		
 		
 		try {
-			personDao.add(p1);
+//			personDao.add(p1);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -40,8 +40,8 @@ public class MybatisTest {
 		}
 		
 		// UPDATE
-		Person p2 = new Person("11112", 222, "변경후");
-		personDao.change(p2);
+//		Person p2 = new Person("11112", 222, "변경후");
+//		personDao.change(p2);
 		
 		
 		// DELETE

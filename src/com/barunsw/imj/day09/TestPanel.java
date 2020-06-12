@@ -21,7 +21,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -37,6 +36,8 @@ import org.apache.logging.log4j.Logger;
 import com.barunsw.imj.common.Person;
 import com.barunsw.imj.common.constants.Gender;
 import com.barunsw.imj.day09.controller.AddressBookInterface;
+import com.barunsw.imj.day09.controller.FileAddressBookImpl;
+import com.barunsw.imj.day09.controller.JdbcAddressBookImpl;
 import com.barunsw.imj.day09.controller.MybatisAddressBookImpl;
 
 public class TestPanel extends JPanel {
@@ -98,8 +99,8 @@ public class TestPanel extends JPanel {
 	
 	public TestPanel() {
 		try {
-//			addressBookInterface = new FileAddressBookImpl();
-			addressBookInterface = new MybatisAddressBookImpl();
+			addressBookInterface = new FileAddressBookImpl();
+//			addressBookInterface = new MybatisAddressBookImpl();
 //			addressBookInterface = new JdbcAddressBookImpl();
 					
 			initComponent();
@@ -272,11 +273,32 @@ public class TestPanel extends JPanel {
 		DefaultMutableTreeNode node1 = new DefaultMutableTreeNode("ㄱ");
 		DefaultMutableTreeNode node2 = new DefaultMutableTreeNode("ㄴ");
 		DefaultMutableTreeNode node3 = new DefaultMutableTreeNode("ㄷ");
-
+		DefaultMutableTreeNode node4 = new DefaultMutableTreeNode("ㄹ");
+		DefaultMutableTreeNode node5 = new DefaultMutableTreeNode("ㅁ");
+		DefaultMutableTreeNode node6 = new DefaultMutableTreeNode("ㅂ");
+		DefaultMutableTreeNode node7 = new DefaultMutableTreeNode("ㅅ");
+		DefaultMutableTreeNode node8 = new DefaultMutableTreeNode("ㅇ");
+		DefaultMutableTreeNode node9 = new DefaultMutableTreeNode("ㅈ");
+		DefaultMutableTreeNode node10 = new DefaultMutableTreeNode("ㅊ");
+		DefaultMutableTreeNode node11 = new DefaultMutableTreeNode("ㅋ");
+		DefaultMutableTreeNode node12 = new DefaultMutableTreeNode("ㅌ");
+		DefaultMutableTreeNode node13 = new DefaultMutableTreeNode("ㅍ");
+		DefaultMutableTreeNode node14 = new DefaultMutableTreeNode("ㅎ");
 		
 		rootNode.add(node1);
 		rootNode.add(node2);
 		rootNode.add(node3);
+		rootNode.add(node4);
+		rootNode.add(node5);
+		rootNode.add(node6);
+		rootNode.add(node7);
+		rootNode.add(node8);
+		rootNode.add(node9);
+		rootNode.add(node10);
+		rootNode.add(node11);
+		rootNode.add(node12);
+		rootNode.add(node13);
+		rootNode.add(node14);
 		
 		treeModel.reload();
 		// tree 선택 이벤트
@@ -341,42 +363,95 @@ public class TestPanel extends JPanel {
 		
 		for ( Person onePerson : personList ) {
 			Vector oneData = new Vector();
-			
-			oneData.add(onePerson.getId());
-			oneData.add(onePerson.getName());
-			oneData.add(onePerson.getAge());
-			oneData.add(onePerson.getGender());
-			oneData.add(onePerson.getPhone());
-			oneData.add(onePerson.getAddress());
-			
-			tableData.add(oneData);
+			String chosung = Direct((onePerson.getName()));
+			if(filterWord == null){
+				
+				oneData.add(onePerson.getId());
+				oneData.add(onePerson.getName());
+				oneData.add(onePerson.getAge());
+				oneData.add(onePerson.getGender());
+				oneData.add(onePerson.getPhone());
+				oneData.add(onePerson.getAddress());
+				
+				tableData.add(oneData);
+			}else if(filterWord.equals(chosung) ) {
+				
+				oneData.add(onePerson.getId());
+				oneData.add(onePerson.getName());
+				oneData.add(onePerson.getAge());
+				oneData.add(onePerson.getGender());
+				oneData.add(onePerson.getPhone());
+				oneData.add(onePerson.getAddress());
+				
+				tableData.add(oneData);
+			}  
 		}
 		
 		tableModel.setData(tableData);
 		tableModel.fireTableDataChanged();
 		
 	}
-//	void personInfo(Person person) {
-//		String id	= jTextField_Id.getText();
-//		String name = jTextField_Name.getText();
-//		int age		= (Integer) jSpinner_Age.getValue();
-//		Gender gender = Gender.M;
-//		if( jRadioButton_Man.isSelected() ) {
-//			gender = Gender.M;
-//		} 
-//		else if( jRadioButton_Man.isSelected() ) {
-//			gender = Gender.W;
-//		}
-//		String phone = jTextField_Phone.getText();
-//		String address = jTextField_Address.getText();
-//		
-//		person = new Person(id, name, age, gender, phone, address);
-//		
-//	}
 	
+	 public String Direct(String name){
+	        char b =name.charAt(0);
+	        String chosung = null;
+	        int first = (b - 44032 ) / ( 21 * 28 );
+	         switch(first){
+	             case 0:
+	             case 1:
+	                 chosung="ㄱ";
+	                 break;
+	             case 2:
+	                 chosung="ㄴ";
+	                 break;
+	             case 3:
+	             case 4:
+	                 chosung="ㄷ";
+	                 break;
+	             case 5:
+	                 chosung="ㄹ";
+	                 break;
+	             case 6:
+	                 chosung="ㅁ";
+	                 break;
+	             case 7:
+	             case 8:
+	                 chosung="ㅂ";
+	                 break;
+	             case 9:
+	             case 10:
+	                 chosung="ㅅ";
+	                 break;
+	             case 11:
+	                 chosung="ㅇ";
+	                 break;
+	             case 12:
+	             case 13:
+	                 chosung="ㅈ";
+	                 break;
+	             case 14:
+	                 chosung="ㅊ";
+	                 break;
+	             case 15:
+	                 chosung="ㅋ";
+	                 break;
+	             case 16:
+	                 chosung="ㅌ";
+	                 break;
+	             case 17:
+	                 chosung="ㅍ";
+	                 break;
+	             case 18:
+	                 chosung="ㅎ";
+	                 break;
+	           
+	         }     
+	     
+	      return chosung;
+	 }
+
 	void jButton_Add_actionPerformed(ActionEvent e) {
 		
-//		personInfo(person);
 		String id	= jTextField_Id.getText();
 		String name = jTextField_Name.getText();
 		int age		= (Integer) jSpinner_Age.getValue();
@@ -464,19 +539,22 @@ public class TestPanel extends JPanel {
 		
 		if(node == null) return;
 		
-		String nodename = (String) node.getUserObject();
+		String nodeName = (String) node.getUserObject();
+		
+		Direct(nodeName);
+		initData(nodeName);
 	}
 
 	public void jTable_Selection_mouseClicked(MouseEvent e) {
 		int row = jTable_List.getSelectedRow();
 		jTextField_Id.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_ID ));
 		jTextField_Name.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_NAME ));
-		LOGGER.debug(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER));
+		jSpinner_Age.setValue(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_AGE ));
 		if(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.M)) {
-			jRadioButton_Man.isSelected();
+			jRadioButton_Man.setSelected(true);
 		}
 		else if(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.W)) {
-			jRadioButton_Woman.isSelected();
+			jRadioButton_Woman.setSelected(true);
 		}
 		jTextField_Phone.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_PHONE ));
 		jTextField_Address.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_ADDRESS ));
