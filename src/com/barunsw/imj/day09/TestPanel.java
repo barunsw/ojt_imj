@@ -39,6 +39,7 @@ import com.barunsw.imj.day09.controller.AddressBookInterface;
 import com.barunsw.imj.day09.controller.FileAddressBookImpl;
 import com.barunsw.imj.day09.controller.JdbcAddressBookImpl;
 import com.barunsw.imj.day09.controller.MybatisAddressBookImpl;
+import com.barunsw.imj.day09.controller.ObjectStreamAddressBookImpl;
 
 public class TestPanel extends JPanel {
 	private static Logger LOGGER = LogManager.getLogger(TestPanel.class);
@@ -100,6 +101,7 @@ public class TestPanel extends JPanel {
 	public TestPanel() {
 		try {
 			addressBookInterface = new FileAddressBookImpl();
+			addressBookInterface = new ObjectStreamAddressBookImpl();
 //			addressBookInterface = new MybatisAddressBookImpl();
 //			addressBookInterface = new JdbcAddressBookImpl();
 					
