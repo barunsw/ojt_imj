@@ -309,6 +309,7 @@ public class TestPanel extends JPanel {
 	
 	private void initTable() {
 		Vector<String> columnData = new Vector<>();
+		
 		columnData.add("ID");
 		columnData.add("이름");
 		columnData.add("나이");
@@ -329,25 +330,31 @@ public class TestPanel extends JPanel {
 				
 		// 컬럼별 width 지정
 		int columnCount = tableModel.getColumnCount();
+		
 		for ( int i = 0; i < columnCount; i++ ) {
 			TableColumn tableColumn = jTable_List.getColumnModel().getColumn(i);
 			
 			JTableHeader header = jTable_List.getTableHeader();
 			// 헤더 정렬
-			((DefaultTableCellRenderer)header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+			((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 			
 			// 데이터 Cell 관련 설정
 			if ( i == TABLE_CELL_INDEX_ID ) {
 				tableColumn.setPreferredWidth(100);
-			} else if ( i == TABLE_CELL_INDEX_NAME ) {
+			} 
+			else if ( i == TABLE_CELL_INDEX_NAME ) {
 				tableColumn.setPreferredWidth(100);
-			} else if ( i == TABLE_CELL_INDEX_AGE ) {
+			} 
+			else if ( i == TABLE_CELL_INDEX_AGE ) {
 				tableColumn.setPreferredWidth(50);
-			} else if ( i == TABLE_CELL_INDEX_GENDER ) {
+			}
+			else if ( i == TABLE_CELL_INDEX_GENDER ) {
 				tableColumn.setPreferredWidth(10);
-			} else if ( i == TABLE_CELL_INDEX_PHONE ) {
+			} 
+			else if ( i == TABLE_CELL_INDEX_PHONE ) {
 				tableColumn.setPreferredWidth(200);
-			} else if ( i == TABLE_CELL_INDEX_ADDRESS ) {
+			} 
+			else if ( i == TABLE_CELL_INDEX_ADDRESS ) {
 				tableColumn.setPreferredWidth(200);
 			}
 		}
@@ -364,7 +371,8 @@ public class TestPanel extends JPanel {
 		for ( Person onePerson : personList ) {
 			Vector oneData = new Vector();
 			String chosung = Direct((onePerson.getName()));
-			if(filterWord == null){
+			
+			if ( filterWord == null ){
 				
 				oneData.add(onePerson.getId());
 				oneData.add(onePerson.getName());
@@ -374,7 +382,8 @@ public class TestPanel extends JPanel {
 				oneData.add(onePerson.getAddress());
 				
 				tableData.add(oneData);
-			}else if(filterWord.equals(chosung) ) {
+			}
+			else if ( filterWord.equals(chosung) ) {
 				
 				oneData.add(onePerson.getId());
 				oneData.add(onePerson.getName());
@@ -395,8 +404,10 @@ public class TestPanel extends JPanel {
 	 public String Direct(String name){
 	        char b =name.charAt(0);
 	        String chosung = null;
+	        
 	        int first = (b - 44032 ) / ( 21 * 28 );
-	         switch(first){
+	        
+	         switch ( first ) {
 	             case 0:
 	             case 1:
 	                 chosung="ㄱ";
@@ -452,18 +463,20 @@ public class TestPanel extends JPanel {
 
 	void jButton_Add_actionPerformed(ActionEvent e) {
 		
-		String id	= jTextField_Id.getText();
-		String name = jTextField_Name.getText();
-		int age		= (Integer) jSpinner_Age.getValue();
-		Gender gender = Gender.M;
+		String id		= jTextField_Id.getText();
+		String name 	= jTextField_Name.getText();
+		int age			= (Integer) jSpinner_Age.getValue();
+		Gender gender 	= Gender.M;
+		
 		if( jRadioButton_Man.isSelected() ) {
 			gender = Gender.M;
 		} 
 		else if( jRadioButton_Woman.isSelected() ) {
 			gender = Gender.W;
 		}
-		String phone = jTextField_Phone.getText();
-		String address = jTextField_Address.getText();
+		
+		String phone 	= jTextField_Phone.getText();
+		String address 	= jTextField_Address.getText();
 		
 		person = new Person(id, name, age, gender, phone, address);
 		
@@ -478,19 +491,20 @@ public class TestPanel extends JPanel {
 	}
 	
 	void jButton_Change_actionPerformed(ActionEvent e) {
-
-		String id	= jTextField_Id.getText();
-		String name = jTextField_Name.getText();
-		int age		= (Integer) jSpinner_Age.getValue();
-		Gender gender = Gender.M;
+		String id		= jTextField_Id.getText();
+		String name 	= jTextField_Name.getText();
+		int age			= (Integer) jSpinner_Age.getValue();
+		Gender gender 	= Gender.M;
+		
 		if( jRadioButton_Man.isSelected() ) {
 			gender = Gender.M;
 		} 
 		else if( jRadioButton_Woman.isSelected() ) {
 			gender = Gender.W;
 		}
-		String phone = jTextField_Phone.getText();
-		String address = jTextField_Address.getText();
+		
+		String phone 	= jTextField_Phone.getText();
+		String address 	= jTextField_Address.getText();
 		
 		person = new Person(id, name, age, gender, phone, address);
 		
@@ -506,18 +520,20 @@ public class TestPanel extends JPanel {
 	
 	void jButton_Delete_actionPerformed(ActionEvent e) {
 		
-		String id	= jTextField_Id.getText();
-		String name = jTextField_Name.getText();
-		int age		= (Integer) jSpinner_Age.getValue();
-		Gender gender = Gender.M;
+		String id		= jTextField_Id.getText();
+		String name 	= jTextField_Name.getText();
+		int age			= (Integer) jSpinner_Age.getValue();
+		Gender gender 	= Gender.M;
+		
 		if( jRadioButton_Man.isSelected() ) {
 			gender = Gender.M;
 		} 
 		else if( jRadioButton_Woman.isSelected() ) {
 			gender = Gender.W;
 		}
-		String phone = jTextField_Phone.getText();
-		String address = jTextField_Address.getText();
+		
+		String phone 	= jTextField_Phone.getText();
+		String address 	= jTextField_Address.getText();
 		
 		person = new Person(id, name, age, gender, phone, address);
 		
@@ -530,14 +546,16 @@ public class TestPanel extends JPanel {
 			LOGGER.error(e1.getMessage(), e1);
 		}
 	}
+	
 	void jButton_Reload_actionPerformed(ActionEvent e) {
 		initData(null);	
 	}
+	
 	void jTree_Selection_valueChanged(TreeSelectionEvent e) {
 		DefaultMutableTreeNode node; 
 		node = (DefaultMutableTreeNode) jTree_Word.getLastSelectedPathComponent();
 		
-		if(node == null) return;
+		if ( node == null ) return;
 		
 		String nodeName = (String) node.getUserObject();
 		
@@ -547,15 +565,18 @@ public class TestPanel extends JPanel {
 
 	public void jTable_Selection_mouseClicked(MouseEvent e) {
 		int row = jTable_List.getSelectedRow();
+		
 		jTextField_Id.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_ID ));
 		jTextField_Name.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_NAME ));
 		jSpinner_Age.setValue(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_AGE ));
-		if(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.M)) {
+		
+		if ( jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.M) ) {
 			jRadioButton_Man.setSelected(true);
 		}
-		else if(jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.W)) {
+		else if( jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_GENDER).equals(Gender.W) ) {
 			jRadioButton_Woman.setSelected(true);
 		}
+		
 		jTextField_Phone.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_PHONE ));
 		jTextField_Address.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_ADDRESS ));
 }

@@ -22,7 +22,6 @@ public class JdbcAddressBookImpl implements AddressBookInterface {
 	private final String DB_PASSWORD 	= "jung2564";
 	
 	public JdbcAddressBookImpl() {
-		// TODO Auto-generated constructor stub
 		try {
 			init();
 		} catch (Exception e) {
@@ -44,8 +43,10 @@ public class JdbcAddressBookImpl implements AddressBookInterface {
 		
 		try (Connection conn = getConnection(); 
 				Statement stmt = conn.createStatement()) {
+			
 			ResultSet resultSet = stmt.executeQuery("SELECT * FROM TB_PERSON");
-			while (resultSet.next()) {
+
+			while ( resultSet.next() ) {
 				String id = resultSet.getString(1);
 				String name = resultSet.getString(2);
 				int age = resultSet.getInt(3);

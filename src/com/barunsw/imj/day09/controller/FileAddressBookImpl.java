@@ -29,7 +29,6 @@ public class FileAddressBookImpl implements AddressBookInterface {
 	
 	@Override
 	public List<Person> getList(Person p) {
-		// TODO Auto-generated method stub
 		List<Person> personList = new ArrayList<>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(ADDRESS_BOOK_FILE))) {
@@ -39,16 +38,18 @@ public class FileAddressBookImpl implements AddressBookInterface {
 				if ( readLine.trim().length() > 0 ) {
 					String[] personData = readLine.split(",");
 					if ( personData.length >= 6 ) {
-						String id = personData[0];
-						String name = personData[1];
-						int age = Integer.parseInt(personData[2]);
+						String id 			= personData[0];
+						String name 		= personData[1];
+						int age 			= Integer.parseInt(personData[2]);
 						String genderString = personData[3];
-						Gender gender = Gender.W;
+						Gender gender		= Gender.W;
+						
 						if(genderString.equals("남자")) {
 							gender = Gender.M;
 						} 
-						String phone = personData[4];
-						String address = personData[5];
+						
+						String phone 		= personData[4];
+						String address 		= personData[5];
 						
 						p = new Person(id, name, age, gender, phone, address);
 						
@@ -67,12 +68,11 @@ public class FileAddressBookImpl implements AddressBookInterface {
 
 	@Override
 	public int addPerson(Person p) throws Exception {
-		// TODO Auto-generated method stub
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE, true))) {
 			List personDate = new ArrayList();
 			
-			if (!personMap.isEmpty()) {
-				for (String nKey : personMap.keySet()) {
+			if ( !personMap.isEmpty() ) {
+				for ( String nKey : personMap.keySet() ) {
 					if( p.getId().equals(nKey) ) {
 						throw new Exception("중복된 아이디 존재");
 					} 
@@ -108,9 +108,10 @@ public class FileAddressBookImpl implements AddressBookInterface {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
 		
 			LOGGER.debug(personMap);
-			for (String nKey : personMap.keySet()) {
+			for ( String nKey : personMap.keySet() ) {
 				LOGGER.debug(p + " , " + nKey);
-				if (p.getId().equals(nKey)) {
+				
+				if ( p.getId().equals(nKey) ) {
 					
 					personMap.put(p.getId(), p);
 
@@ -118,7 +119,7 @@ public class FileAddressBookImpl implements AddressBookInterface {
 				} 
 			}
 			
-			for(String nKey : personMap.keySet() ) {
+			for ( String nKey : personMap.keySet() ) {
 				personDate.add(p.getId());
 				personDate.add(p.getName());
 				personDate.add(p.getAge());
@@ -145,17 +146,20 @@ public class FileAddressBookImpl implements AddressBookInterface {
 		List<Map<String, Person>> personList = new ArrayList<>();
 		
 		List personDate = new ArrayList();
+		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
 
 			LOGGER.debug(p.getId());
 			LOGGER.debug(personMap.keySet());
-			for (String nKey : personMap.keySet()) {
-				if(p.getId().equals(nKey)) {
+			
+			for ( String nKey : personMap.keySet() ) {
+				
+				if ( p.getId().equals(nKey) ) {
 					personMap.remove(p.getId());
 					break;
 				}
 			}
-			for (String nKey : personMap.keySet()) {
+			for ( String nKey : personMap.keySet() ) {
 				personDate.add(p.getId());
 				personDate.add(p.getName());
 				personDate.add(p.getAge());
