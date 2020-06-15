@@ -6,10 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -23,14 +22,21 @@ public class FileAddressBookImpl implements AddressBookInterface {
 
 	private static final String ADDRESS_BOOK_FILE = "data/day09/imj/address_book.dat";
 			
-	private AddressBookInterface addressBookInterface;
 	private Map<String, Person> personMap = new HashMap<>();
-	private Person p = new Person();
 	
-	@Override
-	public List<Person> getList(Person p) {
-		List<Person> personList = new ArrayList<>();
-		
+	public FileAddressBookImpl() {
+		try {
+			readFile();
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+	}
+	
+	/**
+	 * 파일의 내용을 읽어서 personMap에 담는다.
+	 */
+	private void readFile() {
 		try (BufferedReader reader = new BufferedReader(new FileReader(ADDRESS_BOOK_FILE))) {
 			String readLine = null;
 			
@@ -44,17 +50,16 @@ public class FileAddressBookImpl implements AddressBookInterface {
 						String genderString = personData[3];
 						Gender gender		= Gender.W;
 						
-						if(genderString.equals("남자")) {
+						if (genderString.equals("남자")) {
 							gender = Gender.M;
 						} 
 						
 						String phone 		= personData[4];
 						String address 		= personData[5];
 						
-						p = new Person(id, name, age, gender, phone, address);
+						Person p = new Person(id, name, age, gender, phone, address);
 						
 						personMap.put(id, p);
-						personList.add(p);
 					}
 				}
 			}
@@ -62,120 +67,96 @@ public class FileAddressBookImpl implements AddressBookInterface {
 		catch (Exception ex) {
 			LOGGER.error(ex.getMessage(), ex);
 		}
+	}
+	
+	/**
+	 * personMap에 전체 내용을 파일에 Write한다.
+	 */
+	private void writeFile() {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
+			Iterator<String> keyIter = personMap.keySet().iterator();
+			while (keyIter.hasNext()) {
+				String oneId = keyIter.next();
+				
+				Person p = personMap.get(oneId);
+				
+				List personList = new ArrayList();
+				
+				personList.add(p.getId());
+				personList.add(p.getName());
+				personList.add(p.getAge());
+				personList.add(p.getGender());
+				personList.add(p.getPhone());
+				personList.add(p.getAddress());
+	
+				String onePerson = StringUtils.join(personList, ",");
+	
+				writer.write(onePerson);
+				writer.newLine();
+			}
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+	}
+	
+	@Override
+	public List<Person> getList(Person p) {
+		List<Person> personList = new ArrayList<>(personMap.values());
 		return personList;
 	}
 
 
 	@Override
 	public int addPerson(Person p) throws Exception {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE, true))) {
-			List personDate = new ArrayList();
-			
-			if ( !personMap.isEmpty() ) {
-				for ( String nKey : personMap.keySet() ) {
-					if( p.getId().equals(nKey) ) {
-						throw new Exception("중복된 아이디 존재");
-					} 
-				}
+		// personMap 중복 체크 후, 담는다.
+		if ( !personMap.isEmpty() ) {
+			for ( String nKey : personMap.keySet() ) {
+				if ( p.getId().equals(nKey) ) {
+					throw new Exception("중복된 아이디 존재");
+				} 
 			}
-			
-			personDate.add(p.getId());
-			personDate.add(p.getName());
-			personDate.add(p.getAge());
-			personDate.add(p.getGender());
-			personDate.add(p.getPhone());
-			personDate.add(p.getAddress());
-
-			personMap.put(p.getId(), p);
-
-			String onePerson = StringUtils.join(personDate, ",");
-
-			writer.write(onePerson);
-			writer.newLine();
 		}
-		catch (Exception ex) {
-			LOGGER.error(ex.getMessage(), ex);
-		}
+		
+		personMap.put(p.getId(), p);
+		
+		// 파일에 write한다.
+		writeFile();
 
 		return 0;
 	}
 
 	@Override
 	public int changePerson(Person p) throws Exception {
-		List<Map<String, Person>> personList = new ArrayList<>();
-		
-		List personDate = new ArrayList();
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
-		
-			LOGGER.debug(personMap);
-			for ( String nKey : personMap.keySet() ) {
-				LOGGER.debug(p + " , " + nKey);
-				
-				if ( p.getId().equals(nKey) ) {
-					
-					personMap.put(p.getId(), p);
-
-					break;
-				} 
-			}
+		// personMap의 내용을 변경한다.
+		for ( String nKey : personMap.keySet() ) {
+			LOGGER.debug(p + " , " + nKey);
 			
-			for ( String nKey : personMap.keySet() ) {
-				personDate.add(p.getId());
-				personDate.add(p.getName());
-				personDate.add(p.getAge());
-				personDate.add(p.getGender());
-				personDate.add(p.getPhone());
-				personDate.add(p.getAddress());
-				
+			if ( p.getId().equals(nKey) ) {
 				personMap.put(p.getId(), p);
-				
-				String onePerson = StringUtils.join(personDate, ",");
-				
-				writer.write(onePerson);
-				writer.newLine();
-				
-			}
+				break;
+			} 
 		}
+		
+		// 파일에 write한다.
+		writeFile();
 		
 		return 0;
 	}
 
 	@Override
 	public int deletePerson(Person p) throws Exception {
-		
-		List<Map<String, Person>> personList = new ArrayList<>();
-		
-		List personDate = new ArrayList();
-		
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
-
-			LOGGER.debug(p.getId());
-			LOGGER.debug(personMap.keySet());
-			
-			for ( String nKey : personMap.keySet() ) {
-				
-				if ( p.getId().equals(nKey) ) {
-					personMap.remove(p.getId());
-					break;
-				}
-			}
-			for ( String nKey : personMap.keySet() ) {
-				personDate.add(p.getId());
-				personDate.add(p.getName());
-				personDate.add(p.getAge());
-				personDate.add(p.getGender());
-				personDate.add(p.getPhone());
-				personDate.add(p.getAddress());
-
-				personMap.put(p.getId(), p);
-
-				String onePerson = StringUtils.join(personDate, ",");
-
-				writer.write(onePerson);
-				writer.newLine();
-
+		// personMap의 내용을 삭제한다.
+		for ( String nKey : personMap.keySet() ) {
+			if ( p.getId().equals(nKey) ) {
+				personMap.remove(p.getId());
+				break;
 			}
 		}
+
+		// 파일에 write한다.
+		writeFile();
+
 		return 0;
 	}
 

@@ -210,9 +210,9 @@ public class TestPanel extends JPanel {
 				new Insets(0, 0, 5, 5),
 				0, 0));
 		
-		jButton_Add.addActionListener(new TestPanel_jButton_Add_ActionListener(this));
-		jButton_Change.addActionListener(new TestPanel_jButton_Change_ActionListener(this));
-		jButton_Reload.addActionListener(new TestPanel_jButton_Reload_ActionListener(this));
+		jButton_Add.addActionListener(new Day08_TestPanel_jButton_Add_ActionListener(this));
+		jButton_Change.addActionListener(new Day08_TestPanel_jButton_Change_ActionListener(this));
+		jButton_Reload.addActionListener(new Day08_TestPanel_jButton_Reload_ActionListener(this));
 	}
 	
 	private void initTable() {
@@ -354,10 +354,10 @@ public class TestPanel extends JPanel {
 	}
 }
 
-class TestPanel_jButton_Add_ActionListener implements ActionListener {
+class Day08_TestPanel_jButton_Add_ActionListener implements ActionListener {
 	private TestPanel adaptee;
 	
-	public TestPanel_jButton_Add_ActionListener(TestPanel adaptee) {
+	public Day08_TestPanel_jButton_Add_ActionListener(TestPanel adaptee) {
 		this.adaptee = adaptee;
 	}
 
@@ -368,10 +368,10 @@ class TestPanel_jButton_Add_ActionListener implements ActionListener {
 	}
 }
 
-class TestPanel_jButton_Change_ActionListener implements ActionListener {
+class Day08_TestPanel_jButton_Change_ActionListener implements ActionListener {
 	private TestPanel adaptee;
 	
-	public TestPanel_jButton_Change_ActionListener(TestPanel adaptee) {
+	public Day08_TestPanel_jButton_Change_ActionListener(TestPanel adaptee) {
 		this.adaptee = adaptee;
 	}
 	
@@ -382,10 +382,10 @@ class TestPanel_jButton_Change_ActionListener implements ActionListener {
 	}
 }
 
-class TestPanel_jButton_Reload_ActionListener implements ActionListener {
+class Day08_TestPanel_jButton_Reload_ActionListener implements ActionListener {
 	private TestPanel adaptee;
 	
-	public TestPanel_jButton_Reload_ActionListener(TestPanel adaptee) {
+	public Day08_TestPanel_jButton_Reload_ActionListener(TestPanel adaptee) {
 		this.adaptee = adaptee;
 	}
 

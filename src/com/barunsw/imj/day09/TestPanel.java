@@ -402,7 +402,7 @@ public class TestPanel extends JPanel {
 	}
 	
 	 public String Direct(String name){
-	        char b =name.charAt(0);
+	        char b = name.charAt(0);
 	        String chosung = null;
 	        
 	        int first = (b - 44032 ) / ( 21 * 28 );
@@ -552,8 +552,7 @@ public class TestPanel extends JPanel {
 	}
 	
 	void jTree_Selection_valueChanged(TreeSelectionEvent e) {
-		DefaultMutableTreeNode node; 
-		node = (DefaultMutableTreeNode) jTree_Word.getLastSelectedPathComponent();
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTree_Word.getLastSelectedPathComponent();
 		
 		if ( node == null ) return;
 		
@@ -579,6 +578,7 @@ public class TestPanel extends JPanel {
 		
 		jTextField_Phone.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_PHONE ));
 		jTextField_Address.setText((String) jTable_List.getModel().getValueAt(row, TABLE_CELL_INDEX_ADDRESS ));
+	}
 }
 
 class TestPanel_jButton_Add_ActionListener implements ActionListener {
@@ -687,9 +687,5 @@ class TestPanel_jTable_MouseListener implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-	
+	}	
 }
-	
-}
-
