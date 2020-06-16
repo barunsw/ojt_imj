@@ -82,7 +82,8 @@ public class MybatisAddressBookImpl implements AddressBookInterface {
 			
 			// 동일한 ID 존재하는지 체크
 			List<Person> personList = sqlSession.selectList("com.barunsw.imj.day09.controller.AddressBookInterface.selectList", p);
-			if (personList == null) {
+			
+			if ( personList == null ) {
 				throw new Exception("Person 정보 존재하지 않음");
 			}
 			

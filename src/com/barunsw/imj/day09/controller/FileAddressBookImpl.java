@@ -75,6 +75,7 @@ public class FileAddressBookImpl implements AddressBookInterface {
 	private void writeFile() {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADDRESS_BOOK_FILE))) {
 			Iterator<String> keyIter = personMap.keySet().iterator();
+			
 			while (keyIter.hasNext()) {
 				String oneId = keyIter.next();
 				

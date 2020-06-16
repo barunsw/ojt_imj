@@ -39,8 +39,8 @@ public class ObjectStreamAddressBookImpl implements AddressBookInterface {
 		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ADDRESS_BOOK_FILE))) {
 			Object o = null;
 			
-			while ((o = inputStream.readObject()) != null) {
-				if (o instanceof Person) {
+			while ( (o = inputStream.readObject()) != null ) {
+				if ( o instanceof Person ) {
 					personMap.put(((Person) o).getId(), (Person) o);
 				}
 			}
@@ -55,7 +55,7 @@ public class ObjectStreamAddressBookImpl implements AddressBookInterface {
 	private void writeFile() {
 		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(ADDRESS_BOOK_FILE))) {
 			Iterator<Person> pIter = personSet.iterator();
-			while (pIter.hasNext()) {
+			while ( pIter.hasNext() ) {
 				outputStream.writeObject(pIter.next());
 			}
 		}

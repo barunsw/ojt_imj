@@ -47,12 +47,12 @@ public class JdbcAddressBookImpl implements AddressBookInterface {
 			ResultSet resultSet = stmt.executeQuery("SELECT * FROM TB_PERSON");
 
 			while ( resultSet.next() ) {
-				String id = resultSet.getString(1);
-				String name = resultSet.getString(2);
-				int age = resultSet.getInt(3);
-				String gender = resultSet.getString(4);
-				String Phone = resultSet.getString(5);
-				String address = resultSet.getString(6);
+				String id 		= resultSet.getString(1);
+				String name 	= resultSet.getString(2);
+				int age 		= resultSet.getInt(3);
+				String gender 	= resultSet.getString(4);
+				String Phone 	= resultSet.getString(5);
+				String address	= resultSet.getString(6);
 
 			}
 		} catch (Exception e) {

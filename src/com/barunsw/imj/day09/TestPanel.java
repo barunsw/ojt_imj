@@ -45,7 +45,7 @@ public class TestPanel extends JPanel {
 	private static Logger LOGGER = LogManager.getLogger(TestPanel.class);
 	
 	// Table 셀 인덱스 정의
-	private int idx 							= 0;
+	private int idx = 0;
 	
 	private final int TABLE_CELL_INDEX_ID 		= idx++;
 	private final int TABLE_CELL_INDEX_NAME 	= idx++;
@@ -208,7 +208,6 @@ public class TestPanel extends JPanel {
 				new Insets(0, 0, 5, 5),
 				0, 0));
 		
-		
 		// button
 		this.add(jPanel_Command, new GridBagConstraints(0, 4, 7, 1, 
 				1.0, 0.0, 
@@ -303,6 +302,7 @@ public class TestPanel extends JPanel {
 		rootNode.add(node14);
 		
 		treeModel.reload();
+		
 		// tree 선택 이벤트
 		jTree_Word.addTreeSelectionListener(new TestPanel_jTree_Selection_TreeSelectionListener(this));
 		
@@ -372,7 +372,7 @@ public class TestPanel extends JPanel {
 		
 		for ( Person onePerson : personList ) {
 			Vector oneData = new Vector();
-			String chosung = Direct((onePerson.getName()));
+			String chosung = direct((onePerson.getName()));
 			
 			if ( filterWord == null ){
 				
@@ -403,11 +403,11 @@ public class TestPanel extends JPanel {
 		
 	}
 	
-	 public String Direct(String name){
+	 public String direct(String name) {
 	        char b = name.charAt(0);
 	        String chosung = null;
 	        
-	        int first = (b - 44032 ) / ( 21 * 28 );
+	        int first = (b - 44032) / (21 * 28);
 	        
 	         switch ( first ) {
 	             case 0:
@@ -556,11 +556,13 @@ public class TestPanel extends JPanel {
 	void jTree_Selection_valueChanged(TreeSelectionEvent e) {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTree_Word.getLastSelectedPathComponent();
 		
-		if ( node == null ) return;
+		if ( node == null ) {
+			return;
+		}
 		
 		String nodeName = (String) node.getUserObject();
 		
-		Direct(nodeName);
+		direct(nodeName);
 		initData(nodeName);
 	}
 
