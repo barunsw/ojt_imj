@@ -96,13 +96,16 @@ public class ObjectStreamAddressBookImpl implements AddressBookInterface {
 
 	@Override
 	public int changePerson(Person p) throws Exception {
-		for ( String nKey : personMap.keySet() ) {
-			LOGGER.debug(p + " , " + nKey);
-			
-			if ( p.getId().equals(nKey) ) {
-				personMap.put(p.getId(), p);
-				break;
-			} 
+//		for ( String nKey : personMap.keySet() ) {
+//			LOGGER.debug(p + " , " + nKey);
+//			
+//			if ( p.getId().equals(nKey) ) {
+//				personMap.put(p.getId(), p);
+//				break;
+//			} 
+//		}
+		if (personMap.containsKey(p.getId())) {
+			personMap.put(p.getId(), p);
 		}
 		
 		writeFile();
@@ -113,13 +116,14 @@ public class ObjectStreamAddressBookImpl implements AddressBookInterface {
 	@Override
 	public int deletePerson(Person p) throws Exception {
 		// personMap의 내용을 삭제한다.
-		for ( String nKey : personMap.keySet() ) {
-			if ( p.getId().equals(nKey) ) {
-				personMap.remove(p.getId());
-				break;
-			}
-		}
+//		for ( String nKey : personMap.keySet() ) {
+//			if ( p.getId().equals(nKey) ) {
+//				personMap.remove(p.getId());
+//				break;
+//			}
+//		}
 
+		personMap.remove(p.getId());
 		writeFile();
 
 		return 0;

@@ -100,7 +100,7 @@ public class TestPanel extends JPanel {
 	
 	public TestPanel() {
 		try {
-			addressBookInterface = new FileAddressBookImpl();
+//			addressBookInterface = new FileAddressBookImpl();
 			addressBookInterface = new ObjectStreamAddressBookImpl();
 //			addressBookInterface = new MybatisAddressBookImpl();
 //			addressBookInterface = new JdbcAddressBookImpl();
