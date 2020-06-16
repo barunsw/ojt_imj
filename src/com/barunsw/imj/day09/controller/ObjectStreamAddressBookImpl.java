@@ -74,12 +74,17 @@ public class ObjectStreamAddressBookImpl implements AddressBookInterface {
 	@Override
 	public int addPerson(Person p) throws Exception {
 		// personMap 중복 체크 후, 담는다.
+		/**
 		if ( !personMap.isEmpty() ) {
 			for ( String nKey : personMap.keySet() ) {
 				if ( p.getId().equals(nKey) ) {
 					throw new Exception("중복된 아이디 존재");
 				}
 			}
+		}
+		*/
+		if (personMap.containsKey(p.getId())) {
+			throw new Exception("중복된 아이디 존재");
 		}
 
 		personMap.put(p.getId(), p);
