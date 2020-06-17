@@ -14,7 +14,15 @@ import org.apache.logging.log4j.Logger;
 public class AnalogClockPanel extends JPanel {
 	private static Logger LOGGER = LogManager.getLogger(AnalogClockPanel.class);
 	
-	private AnalogClockPanel_TimeThread t;
+	private final String TYPE_X = "X";
+	private final String TYPE_Y = "Y";
+	private final int CLOCK_FONT_SIZE = 25;
+	
+	private AnalogClockPanel_TimeThread analogClockPanelThread;
+	
+	private int centerX = 0;
+	private int centerY = 0;
+	
 	
 	private int hour	= 0;
 	private int min		= 0;
@@ -35,8 +43,8 @@ public class AnalogClockPanel extends JPanel {
 	}
 	
 	private void initThread() {
-		t = new AnalogClockPanel_TimeThread(this);
-		t.start();
+		analogClockPanelThread = new AnalogClockPanel_TimeThread(this);
+		analogClockPanelThread.start();
 	}
 	
 	@Override
@@ -48,29 +56,17 @@ public class AnalogClockPanel extends JPanel {
 			return;
 		}
 
+		centerX = getWidth() / 2;
+		centerY = getHeight() / 2;
+		
 		hour	= getCurrentTime().get(Calendar.HOUR);
 		min		= getCurrentTime().get(Calendar.MINUTE);
 		sec 	= getCurrentTime().get(Calendar.SECOND);
 		
-		if ( sec == 60 ) {
-			sec = 0;
-			min ++;
-		}
-		if( min == 60 ) {
-			min = 0;
-			hour ++;
-		}
-		if( min == 60 && hour == 12 ) {
-			hour = 0;
-		}
-        
         int r = 200;
-        int centerX = getWidth() / 2;
-        int centerY = getHeight() / 2;
-        
 		// 시간
         g.setColor(Color.BLACK);
-        g.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 25));
+        g.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, CLOCK_FONT_SIZE));
         for ( int i = 1; i <= 12; i++ ) {
             int strX = (int) (centerX + r * Math.cos(Math.PI/2 - i*(Math.PI/6)));
             int strY = (int) (centerY - r * Math.sin(Math.PI/2 - i*(Math.PI/6)));
@@ -79,26 +75,38 @@ public class AnalogClockPanel extends JPanel {
         }
         
         // 초점
-        int sx = centerX + (int) ((r-30) * Math.cos(Math.PI/2 - sec * Math.PI/30));
-        int sy = centerY - (int) ((r-30) * Math.sin(Math.PI/2 - sec * Math.PI/30));
+        int sx = makeXY(TYPE_X, (r-30), (sec * Math.PI/30));
+        int sy = makeXY(TYPE_Y, (r-30), (sec * Math.PI/30));
         
         g.setColor(Color.RED);
         g.drawLine(centerX, centerY, sx, sy);
         
         // 분침
-        int mx = centerX + (int) ((r-50) * Math.cos(Math.PI/2 - min * Math.PI/30));
-        int my = centerY - (int) ((r-50) * Math.sin(Math.PI/2 - min * Math.PI/30));
+        int mx = makeXY(TYPE_X, (r-50), (min * Math.PI/30));
+        int my = makeXY(TYPE_Y, (r-50), (min * Math.PI/30));
         
         g.setColor(Color.GRAY);
         g.drawLine(centerX, centerY, mx, my);
         
         // 시침
-        int hx = centerX + (int) ((r-100) * Math.cos(Math.PI/2 - ((hour*60+min)/10)*(Math.PI/36)));
-        int hy = centerY - (int) ((r-100) * Math.sin(Math.PI/2 - ((hour*60+min)/10)*(Math.PI/36)));
+        int hx = makeXY(TYPE_X, (r-100), ((hour*60+min)/10)*(Math.PI/36));
+        int hy = makeXY(TYPE_Y, (r-100), ((hour*60+min)/10)*(Math.PI/36));
         
         g.setColor(Color.BLACK);
         g.drawLine(centerX, centerY, hx, hy);
         
+	}
+	
+	private int makeXY(String type, int r, double value) {
+		int result = 0;
+		if ( TYPE_X.equals(type) ) {
+			result = centerX + (int) (r * Math.cos(Math.PI/2 - value));	
+		}
+		else {
+			result = centerY - (int) (r * Math.sin(Math.PI/2 - value));
+		}
+		return result;
+		
 	}
 	
 	public Calendar getCurrentTime() {
