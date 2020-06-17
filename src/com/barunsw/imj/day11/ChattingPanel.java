@@ -11,10 +11,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -29,24 +26,20 @@ import org.apache.logging.log4j.Logger;
 public class ChattingPanel extends JPanel {
 	private static Logger LOGGER = LogManager.getLogger(ChattingPanel.class);
 
-	private JScrollPane jScrollPane 		= new JScrollPane();
-	private JTextArea jTextArea_chat		= new JTextArea();
+	private JScrollPane jScrollPane 				= new JScrollPane();
+	private JTextArea jTextArea_chat				= new JTextArea();
 	
-	private GridBagLayout gridBagLayout 	= new GridBagLayout();
+	private GridBagLayout gridBagLayout 			= new GridBagLayout();
 
-	private JPanel jPanel					= new JPanel();
+	private JPanel jPanel							= new JPanel();
 	private JToggleButton jToggleButton_Connect 	= new JToggleButton("접속");
-	private JButton jButton_Send 			= new JButton("전송");
+	private JButton jButton_Send 					= new JButton("전송");
 	
-	private JTextField jTextField_Id 		= new JTextField();
-	private JTextField jTextField_Message 	= new JTextField();
-	
-	private static Map<ChattingPanel, String> clientRepo = new HashMap<>();
+	private JTextField jTextField_Id 				= new JTextField();
+	private JTextField jTextField_Message 			= new JTextField();
 	
 	private String userId;
 	private String message;
-	
-	private PrintWriter output;
 	
 	private Socket s;
 	private BufferedWriter writer;
@@ -71,15 +64,8 @@ public class ChattingPanel extends JPanel {
 		socketHandler = new ChattingPanel_SocketHandler(this, s);
 		socketHandler.start();
 	}
-	
-	public ChattingPanel(Socket s) throws Exception {
-		this.s = new Socket("localhost", SocketConstants.TCP_PORT);
-		initComponent();
-		this.writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-	}
 
 	private void initComponent() {
-		try {
 			LOGGER.debug("initComponent");
 			this.setLayout(gridBagLayout);
 			
@@ -90,7 +76,6 @@ public class ChattingPanel extends JPanel {
 			jScrollPane.getViewport().add(jTextArea_chat);
 			
 			jTextArea_chat.setFocusable(false);
-//			jTextArea_chat.setEditable(false);
 			
 			this.add(jScrollPane, new GridBagConstraints(0, 0, 1, 1,
 					1.0, 1.0,
@@ -131,29 +116,9 @@ public class ChattingPanel extends JPanel {
 			jButton_Send.addActionListener(new ChattingPanel_jButton_Send_ActionListener(this));
 			jToggleButton_Connect.addActionListener(new ChattingPanel_jToggleButton_Connect_ActionListener(this));
 			
-			try {
-				if(userId != null && message != null ) {
-					jTextArea_chat.append(userId + ": " + message + "\n");
-					jTextArea_chat.setCaretPosition(jTextArea_chat.getText().length());
-				}
-			} 
-			catch (Exception e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-
 	}
 	
 	public void send(String str) {
-//		try (OutputStream os = s.getOutputStream();) {
-//			os.write(str.getBytes());
-//			os.flush();
-//		} 
-//		catch (IOException e) {
-//			e.printStackTrace();
-//		}
 	
 		try {
 			writer.write(str + "\n");
@@ -170,6 +135,7 @@ public class ChattingPanel extends JPanel {
 		if ( jToggleButton_Connect.getText().equals("접속") ) {
 			String userLogin = "LOGIN:" +userId;
 			send(userLogin);
+			
 			jTextField_Id.setEditable(false);
 			jToggleButton_Connect.setText("종료");
 		}
@@ -183,7 +149,6 @@ public class ChattingPanel extends JPanel {
 	public void jButton_Send_actionPerformed(ActionEvent e) {
 		String message = "MSG:" + jTextField_Message.getText();
 		send(message);
-//		recvMessage(message);
 		jTextField_Message.setText(null);
 		
 	}

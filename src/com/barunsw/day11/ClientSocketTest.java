@@ -22,7 +22,7 @@ public class ClientSocketTest {
 						outputStream.write("LOGIN:철수\n".getBytes());
 						outputStream.flush();
 						
-						for (int i = 0; i < 10; i++) {
+						for ( int i = 0; i < 10; i++ ) {
 							String message = "MSG:안녕하세요\n";
 							outputStream.write(message.getBytes());
 							outputStream.flush();
@@ -52,7 +52,7 @@ public class ClientSocketTest {
 					// 받는 행위
 					try (BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));) {
 						String readLine = null;
-						while ((readLine = reader.readLine()) != null) {
+						while ( (readLine = reader.readLine()) != null ) {
 							LOGGER.debug(String.format("recv:%s", readLine));
 						}
 					}

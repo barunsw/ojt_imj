@@ -34,7 +34,7 @@ public class ClientSocketHandler extends Thread {
 		// 메시지 수신
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 			String readLine = null;
-			while ((readLine = reader.readLine()) != null) {
+			while ( (readLine = reader.readLine()) != null ) {
 				LOGGER.debug(String.format("read(%s):%s", socket.getRemoteSocketAddress(), readLine));
 
 				// \n을 없앤 메시지 처리
@@ -45,7 +45,7 @@ public class ClientSocketHandler extends Thread {
 		}
 	}
 	private void handleMessage(String message) {
-		if(message.toUpperCase().startsWith(MSG_TYPE_LOGIN)) {
+		if ( message.toUpperCase().startsWith(MSG_TYPE_LOGIN) ) {
 			String userId = message.split(":")[1].trim();
 			
 			clientRepo.put(this, userId);
@@ -54,20 +54,20 @@ public class ClientSocketHandler extends Thread {
 				oneClient.sendMessage(userId + "님이 들어왔습니다.");
 			}
 		}
-		else if (message.toUpperCase().startsWith(MSG_TYPE_LOGOUT)) {
+		else if ( message.toUpperCase().startsWith(MSG_TYPE_LOGOUT) ) {
 			String userId = message.split(":")[1].trim();
 			
 			clientRepo.remove(this);
 			
-			for (ClientSocketHandler oneClient : clientRepo.keySet()) {
+			for ( ClientSocketHandler oneClient : clientRepo.keySet() ) {
 				oneClient.sendMessage(userId + "님이 나갔습니다.");
 			}
 		}
-		else if (message.toUpperCase().startsWith(MSG_TYPE_MSG)) {
+		else if ( message.toUpperCase().startsWith(MSG_TYPE_MSG) ) {
 			String msg = message.split(":")[1].trim();
 			
 			LOGGER.debug("수신한 메시지 : " + msg);
-			for (ClientSocketHandler oneClient : clientRepo.keySet()) {
+			for ( ClientSocketHandler oneClient : clientRepo.keySet() ) {
 				oneClient.sendMessage(clientRepo.get(oneClient) + ":" + msg);
 				LOGGER.debug(String.format("메시지 전송 [%s]:%s", clientRepo.get(oneClient), msg));
 			}
