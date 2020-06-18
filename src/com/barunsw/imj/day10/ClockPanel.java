@@ -58,10 +58,12 @@ public class ClockPanel extends JPanel {
 		}
 		
 		// FontMetrics를 구하기 위해서는 g2d를 가져와야 함
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setFont(font);
+//		Graphics2D g2d = (Graphics2D) g;
+//		g2d.setFont(font);
+		g.setFont(font);
 		
-		FontMetrics fm = g2d.getFontMetrics();
+//		FontMetrics fm = g2d.getFontMetrics();
+		FontMetrics fm = g.getFontMetrics();
 		
 		// currentTime 문자열 Width
 		int strWidth = fm.stringWidth(currentTime);
