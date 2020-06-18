@@ -7,7 +7,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -21,7 +20,6 @@ import javax.swing.JToggleButton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.barunsw.imj.day12.chat.server.ChatImpl;
 import com.barunsw.imj.day12.chat.server.ChatInterface;
 
 public class ChatPanel extends JPanel {

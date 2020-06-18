@@ -1,5 +1,7 @@
 package com.barunsw.imj.day12.chat.client;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,6 +13,9 @@ import org.apache.logging.log4j.Logger;
 
 public class ChatFrame extends JFrame {
 	private static Logger LOGGER = LogManager.getLogger(ChatFrame.class);
+	
+	private static final int FRAME_WIDTH 	= 600;
+	private static final int FRAME_HEIGHT 	= 480;
 	
 	private ChatPanel chatPanel = new ChatPanel();
 	
@@ -24,10 +29,14 @@ public class ChatFrame extends JFrame {
 	}
 	
 	private void initComponent() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		int x = (screenSize.width - FRAME_WIDTH) / 2;
+		int y = (screenSize.height - FRAME_HEIGHT) / 2;
+		
+		this.setBounds(x, y, FRAME_WIDTH, FRAME_HEIGHT);
 		this.setContentPane(chatPanel);
 		this.setTitle("Chatting Program");
-		
-		this.setBounds(0, 0, 600, 480);
 		this.setVisible(true);
 		
 		this.addWindowListener(new WindowAdapter() {
