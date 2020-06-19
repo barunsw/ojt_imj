@@ -52,7 +52,7 @@ public class TestPanel extends JPanel {
 			
 //			LOGGER.debug(String.format("+++ TestPanel에 boardPanel(%s, %s) 추가",
 //					boardPanel.getBoardWidth(), boardPanel.getBoardHeight()));
-			boardPanel.repaint();
+//			boardPanel.repaint();
 			
 //			public final int BOARD_START_X			= 27;
 //			public final int BOARD_START_Y_TOP		= 26;
@@ -73,6 +73,8 @@ public class TestPanel extends JPanel {
 			}
 			LOGGER.debug("--- TestPanel에 {} boardPanel 추가", boardId);
 		}
+		
+		repaint();
 	}
 
 	private List<BoardVo> getBoardData() {
